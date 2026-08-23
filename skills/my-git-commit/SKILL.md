@@ -1,9 +1,9 @@
 ---
-name: commit
-description: Create a git commit in Conventional Commits format. Use when committing, writing a commit message, or when the user mentions conventional commits or git commit.
+name: my-git-commit
+description: Create a Git commit using this repository's Conventional Commits conventions. Use when committing, writing a commit message, or when the user mentions Conventional Commits or git commit.
 ---
 
-# Commit
+# My Git Commit
 
 Follow this skill when committing. Do not run `git push` or `git rm`. `AGENTS.md` is the source of truth for those bans. If those commands are needed, give them to the user.
 

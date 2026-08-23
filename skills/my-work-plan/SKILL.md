@@ -1,9 +1,9 @@
 ---
-name: work-plan
-description: Create and update a multi-step work plan as Markdown and save it under docs/plans/ with a dated filename. Use for implementation, investigation, training/eval, debugging, or refactoring when you need to record steps, progress, completion, and remaining work.
+name: my-work-plan
+description: Create and update this repository's multi-step work plans as dated Markdown files under docs/plans/. Use for implementation, investigation, training/eval, debugging, or refactoring when you need to record steps, progress, completion, and remaining work.
 ---
 
-# Work plan
+# My Work Plan
 
 Pin the request, goal, steps, and progress in Markdown and save it under `docs/plans/`. After a conversation break, the same file alone should be enough to resume.
 
@@ -154,9 +154,9 @@ Skeleton:
 
 ## Relation to other skills
 
-- Follow [implement](../implement/SKILL.md) when coding.
-- Follow [test](../test/SKILL.md) for how to test.
-- This skill covers creating, saving, and updating the work plan, and recording binding decisions as ADRs. It does not replace the design workflow in [implement](../implement/SKILL.md).
+- Follow [my-implement](../my-implement/SKILL.md) when coding.
+- Follow [my-test](../my-test/SKILL.md) for how to test.
+- This skill covers creating, saving, and updating the work plan, and recording binding decisions as ADRs. It does not replace the design workflow in [my-implement](../my-implement/SKILL.md).
 
 ## Hook into the implement skill
 

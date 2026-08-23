@@ -1,4 +1,0 @@
-interface:
-  display_name: "Test"
-  short_description: "Test-first development and staged verification with pytest"
-  default_prompt: "Use $test to write pytest tests before changing production code."

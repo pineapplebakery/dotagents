@@ -1,9 +1,9 @@
 ---
-name: test
-description: Test-first development and staged verification with pytest. Use when adding or changing implementation, fixing bugs, changing behavior, refactoring, or adding or updating tests.
+name: my-test
+description: Apply this repository's test-first development and staged verification conventions with pytest. Use when adding or changing implementation, fixing bugs, changing behavior, refactoring, or adding or updating tests.
 ---
 
-# Test
+# My Test
 
 ## TDD cycle
 

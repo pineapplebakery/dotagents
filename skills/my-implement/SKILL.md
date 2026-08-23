@@ -1,15 +1,15 @@
 ---
-name: implement
-description: Implement or change Python code in this repository with readable, simple structure. Follow KISS, YAGNI, DRY, and Why comments. Use when adding features, fixing bugs, refactoring, or extending and integrating vendor models.
+name: my-implement
+description: Implement or change Python code using this repository's readable, simple structure conventions. Follow KISS, YAGNI, DRY, and Why comments. Use when adding features, fixing bugs, refactoring, or extending and integrating vendor models.
 ---
 
-# Implement
+# My Implement
 
 ## Workflow
 
 1. Read `AGENTS.md`, `README.md`, the files you will change, and their callers.
-2. If the work is multi-step, follow [work-plan](../work-plan/SKILL.md) and write the goal, done-when, and steps in `docs/plans/YYYY-MM-DD-<slug>.md` before coding. Update that file as each step finishes.
-3. Follow [test](../test/SKILL.md): express the expected behavior as a pytest test before changing production code, and confirm it fails for the intended reason.
+2. If the work is multi-step, follow [my-work-plan](../my-work-plan/SKILL.md) and write the goal, done-when, and steps in `docs/plans/YYYY-MM-DD-<slug>.md` before coding. Update that file as each step finishes.
+3. Follow [my-test](../my-test/SKILL.md): express the expected behavior as a pytest test before changing production code, and confirm it fails for the intended reason.
 4. Pick the simplest design that fits the existing structure.
 5. Implement the minimum needed to make the tests pass.
 6. Remove duplication and obscurity while keeping tests green.

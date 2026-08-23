@@ -2,7 +2,8 @@
 
 set -eu
 
-destination=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+repository_directory=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+destination="$repository_directory/skills"
 temporary_directory=$(mktemp -d)
 trap 'rm -rf "$temporary_directory"' EXIT HUP INT TERM
 

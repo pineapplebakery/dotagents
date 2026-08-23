@@ -1,0 +1,4 @@
+interface:
+  display_name: "My Implement"
+  short_description: "Implement changes with readable, simple structure and TDD"
+  default_prompt: "Use $my-implement to make the change with a readable, simple structure."

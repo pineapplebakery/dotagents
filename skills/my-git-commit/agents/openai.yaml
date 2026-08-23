@@ -1,0 +1,4 @@
+interface:
+  display_name: "My Git Commit"
+  short_description: "Commit with Conventional Commits"
+  default_prompt: "Use $my-git-commit to create a Conventional Commits commit."
