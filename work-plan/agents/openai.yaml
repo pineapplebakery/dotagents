@@ -1,0 +1,4 @@
+interface:
+  display_name: "Work Plan"
+  short_description: "Record steps, progress, completion, and remaining work in Markdown under docs/plans/"
+  default_prompt: "Use $work-plan to create or update a dated Markdown work plan under docs/plans/."
