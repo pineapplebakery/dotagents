@@ -1,11 +1,11 @@
 ---
 name: my-git-commit
-description: Create a Git commit using this repository's Conventional Commits conventions. Use when committing, writing a commit message, or when the user mentions Conventional Commits or git commit.
+description: Create a Git commit in Conventional Commits format. Use when committing, writing a commit message, or when the user mentions Conventional Commits or git commit.
 ---
 
 # My Git Commit
 
-Follow this skill when committing. Do not run `git push` or `git rm`. `AGENTS.md` is the source of truth for those bans. If those commands are needed, give them to the user.
+Follow this skill when committing and obey the applicable `AGENTS.md` instructions. Do not run `git push` or `git rm`. If those commands are needed, give them to the user.
 
 ## Message
 
@@ -30,7 +30,7 @@ Follow this skill when committing. Do not run `git push` or `git rm`. `AGENTS.md
 ## Body
 
 - Write Why. Do not restate What.
-- If you changed `vendor/`, note that it is read-only by default and why this change is an exception.
+- If the commit changes a directory that applicable workspace instructions designate as read-only or normally unchanged, explain why the exception was necessary.
 
 ## Steps
 

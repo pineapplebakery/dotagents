@@ -1,6 +1,6 @@
 ---
 name: my-test
-description: Apply this repository's test-first development and staged verification conventions with pytest. Use when adding or changing implementation, fixing bugs, changing behavior, refactoring, or adding or updating tests.
+description: Apply test-first development and staged verification with pytest. Use when adding or changing Python behavior, fixing bugs, refactoring, or adding or updating pytest tests.
 ---
 
 # My Test
@@ -18,27 +18,26 @@ For refactors that must keep current behavior, first add characterization tests 
 
 ## Test design
 
-- Write tests with `pytest`. Always put them under `tests/`.
-- Mirror the `src/` directory layout under `tests/`, and pair each module with its test file. Example: tests for `src/train.py` live in `tests/test_train.py`.
+- Write tests with `pytest` and follow the project's existing test layout. If the project has no convention and the user authorizes a new pytest layout, use `tests/`.
 - Verify behavior from stable public boundaries, not internal steps of the implementation.
 - One test covers one behavior. Name it so a failure shows expected vs actual.
-- Prefer small inputs that run fast and deterministically on CPU. Fix seeds when using randomness.
-- Do not assume a full dataset, pretrained weights, GPU, or network for ordinary tests. Keep required integration tests clearly separate and state their requirements in the test.
+- Prefer small inputs that run fast and deterministically. Fix seeds when using randomness.
+- Do not assume external datasets, large artifacts, specialized hardware, or network access for ordinary tests. Keep required integration tests clearly separate and state their requirements in the test.
 - Isolate side effects with `tmp_path`, `monkeypatch`, and fixtures. Avoid mocks that freeze implementation details.
 
 ## Running
 
-Fail fast on the target test:
+Use the project's configured test runner. With direct pytest invocation, fail fast on the target test:
 
 ```bash
-uv run pytest tests/path/to/test_module.py::test_name -q
+pytest tests/path/to/test_module.py::test_name -q
 ```
 
 After implementing, widen to the file, related scope, then the full suite:
 
 ```bash
-uv run pytest tests/path/to/test_module.py -q
-uv run pytest -q
+pytest tests/path/to/test_module.py -q
+pytest -q
 ```
 
-If pytest is not a development dependency, add it to the root uv project as a development dependency and update the lockfile. If `pyproject.toml` does not exist, do not create a test harness without a request.
+If pytest is not already part of the project's test setup, do not add it without user approval. If no test infrastructure exists, do not create one without a request.

@@ -1,6 +1,6 @@
 ---
 name: my-work-plan
-description: Create and update this repository's multi-step work plans as dated Markdown files under docs/plans/. Use for implementation, investigation, training/eval, debugging, or refactoring when you need to record steps, progress, completion, and remaining work.
+description: Create and update multi-step work plans as dated Markdown files under docs/plans/. Use for implementation, investigation, training/eval, debugging, or refactoring when you need to record steps, progress, completion, and remaining work.
 ---
 
 # My Work Plan
@@ -26,13 +26,13 @@ Skip when:
 | Directory | `docs/plans/` (create it if missing) |
 | Filename | `YYYY-MM-DD-<short-slug>.md` |
 | Date | The **day the plan was created** (local date). Do not change the date in the filename on later updates |
-| Slug | Lowercase letters, digits, hyphens. A short identifier for the work (example: `celebamask-eval`) |
+| Slug | Lowercase letters, digits, hyphens. A short identifier for the work (example: `cache-debugging`) |
 | Collision on the same day | Change the slug, or append `-2` and so on |
 
 Examples:
 
-- `docs/plans/2026-08-22-init-face-parsing.md`
-- `docs/plans/2026-08-22-celebamask-eval.md`
+- `docs/plans/2026-08-22-api-refactor.md`
+- `docs/plans/2026-08-22-cache-debugging.md`
 
 Create the file when you start. Later progress updates **overwrite the same file**. Chat may summarize, but `docs/plans/` is the source of truth.
 
@@ -58,7 +58,7 @@ Do not use vague "later" or "mostly done". Include all of the following every ti
 - Summarize the user's instruction in Request. Do not substitute the agent's own restatement of goal or done-when. Do not paste the prompt or system text.
 - If the request changes mid-work, update Request and leave one sentence on what changed.
 - Design choices record what you picked and why (evidence, rejected options). Keep work-local choices in the plan. If they bind later work, write an ADR and link it from the plan.
-- Make steps executable units (example: "Add a regression test for mIoU in `tests/test_metrics.py`").
+- Make steps executable units (example: "Add a regression test for cache invalidation in `tests/test_cache.py`").
 - Use these status words: `pending` / `in progress` / `done` / `blocked` / `skipped` (give a reason when skipped).
 - Separate guess from confirmed fact. Mark unconfirmed items as "unconfirmed: …".
 - On update, make the whole file current. Do not leave the file stale after reporting a diff in chat.
@@ -125,7 +125,7 @@ New file skeleton:
 
 Do not copy the plan's Design choices. Write to `docs/adr/` only when one of these applies:
 
-- It binds later implementation, config, or the vendor boundary
+- It binds later implementation, configuration, an external integration, or a public interface
 - Other work will treat it as a given
 - A strong rejected option exists and you need to prevent revisiting it
 
