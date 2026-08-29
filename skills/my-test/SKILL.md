@@ -20,6 +20,7 @@ For refactors that must keep current behavior, first add characterization tests 
 
 - Write tests with `pytest` and follow the project's existing test layout. If the project has no convention and the user authorizes a new pytest layout, use `tests/`.
 - Verify behavior from stable public boundaries, not internal steps of the implementation.
+- Keep tests with the behavior they verify: move a helper's unit test with its owning module, and keep runtime dataset tests independent of offline/preparation modules. For cross-path equivalence, use an independently specified expected fixture instead of calling the conversion under test to build the expectation.
 - One test covers one behavior. Name it so a failure shows expected vs actual.
 - Prefer small inputs that run fast and deterministically. Fix seeds when using randomness.
 - Do not assume external datasets, large artifacts, specialized hardware, or network access for ordinary tests. Keep required integration tests clearly separate and state their requirements in the test.

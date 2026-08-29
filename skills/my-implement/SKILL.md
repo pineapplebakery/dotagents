@@ -10,11 +10,12 @@ description: Implement or change Python code with a readable, simple structure. 
 1. Read the applicable `AGENTS.md` files, relevant project documentation, the files you will change, and their callers.
 2. If the work is multi-step, follow [my-work-plan](../my-work-plan/SKILL.md) and write the goal, done-when, and steps in `docs/plans/YYYY-MM-DD-<slug>.md` before coding. Update that file as each step finishes.
 3. Follow [my-test](../my-test/SKILL.md): express the expected behavior as a pytest test before changing production code, and confirm it fails for the intended reason. If pytest is not already part of the project's test setup, obtain user approval before adding it.
-4. Pick the simplest design that fits the existing structure.
-5. Implement the minimum needed to make the tests pass.
-6. Remove duplication and obscurity while keeping tests green.
-7. Run related tests, then ruff as below, then review the change scope.
-8. Close the work plan's done-when with evidence.
+4. If a refactor removes a caller or moves behavior between runtime and offline/preparation paths, audit ownership before choosing the module: search all production and test references, classify each helper by its remaining production consumers, and move a helper to its sole production owner. Keep it shared only when multiple production consumers need it.
+5. Pick the simplest design that fits the existing structure.
+6. Implement the minimum needed to make the tests pass.
+7. Remove duplication and obscurity while keeping tests green.
+8. Run related tests, then ruff as below, then review the change scope.
+9. Close the work plan's done-when with evidence.
 
 ## Ruff after implementation
 
@@ -31,6 +32,7 @@ After the implementation and tests are done, format and lint with ruff. Prefer `
 - Use DRY to avoid putting the same knowledge or reason-to-change in multiple places. Do not abstract for predicted duplication, and do not extract a helper used once.
 - Keep function and class responsibilities narrow. Add a new layer, config key, or dependency only when you can explain why it is needed. (SRP / YAGNI)
 - Keep project-specific logic in the workspace's established source layout. Isolate dependencies on external or generated code behind a narrow boundary when doing so reduces coupling. (Separation of Concerns / Dependency Inversion)
+- When behavior changes ownership, do not preserve a stale boundary with a mechanical import rewrite just to keep tests green. Recheck the import graph after the old caller is removed.
 
 When principles conflict, pick the simplest implementation that meets the current requirement. Use SOLID and Open/Closed to inspect existing design, not as a reason to add unused layers, interfaces, or extension points. Where those overlap the five items above, the items above are the source of truth.
 
