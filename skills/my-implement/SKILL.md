@@ -43,10 +43,32 @@ When principles conflict, pick the simplest implementation that meets the curren
 - **Fail Fast**: Invalid input or broken assumptions must fail immediately at the boundary. Do not silently coerce and continue.
 - **Measure First**: Do not optimize until measurement or a public-boundary test gives evidence. Do not fit numbers by guesswork.
 
+## Runtime and API design
+
+- Use built-in exception types when they describe the failure. Do not use `assert` for input validation, preconditions, or required runtime behavior; reserve it for internal invariants that can safely disappear under optimized execution.
+- Keep `try` blocks narrow. Catch only expected exceptions; do not use bare or broad catches unless re-raising or deliberately isolating and recording a failure. Error messages must describe the actual condition and include relevant values clearly.
+- Manage files, sockets, locks, database connections, and similar resources with `with` or an explicit `finally`. Do not rely on object destruction for cleanup. If ownership or lifetime is non-obvious, document it.
+- Avoid mutable module-level or class-level state. If it is required, keep it internal and document its ownership, lifetime, and reason for existence.
+- Keep comprehensions, generator expressions, conditional expressions, and lambdas simple. Prefer a loop or named helper when an expression needs multiple stages or non-obvious control flow.
+- Use nested functions only when they close over a local value. Otherwise, use a module-private helper so it remains testable. Avoid metaclasses, custom descriptors, import hacks, and other dynamic features unless a concrete requirement justifies them.
+- Do not use mutable default arguments. Use `None` and initialize inside the function, including when the mutable value comes from a custom object rather than a literal.
+- Keep executable work in `main()` behind `if __name__ == "__main__":`; importing a module must not run CLI handling, open resources, or perform expensive setup.
+- Give public APIs accurate argument and return annotations. Prefer abstract collection types at API boundaries, and use `Any` only at a deliberate dynamic boundary with a documented reason.
+
 ## Naming and comments
 
 - Use English identifiers.
+- Choose descriptive names and avoid unexplained, project-local abbreviations. Short names are acceptable for tightly scoped iterators or established mathematical notation.
 - Do not comment what the code already says.
 - When you comment, include **Why** the code is needed. Comments that mark steps in a flow are fine when they help understanding.
 - If you cannot take the simple path and must add complexity, record the constraint and why you chose that path at the site.
 - When changing existing code, match the surrounding and task language. For new files, use the same comment language as nearby project code.
+
+## Docstrings
+
+- Document public modules, classes, functions, and methods when callers need to know how to use them. Add a docstring to private code when its behavior, constraints, or side effects are not obvious from the code.
+- Start with the caller-visible purpose. Do not describe the implementation line by line or repeat a clear function name.
+- For non-trivial APIs, describe the parts a caller cannot infer reliably from the signature: parameter meaning and valid values, units/shapes/devices, default behavior, return structure, side effects, resource ownership, preconditions, and relevant exceptions.
+- Use `Args`, `Returns`, `Yields`, `Raises`, or `Attributes` sections when those details exist. List each item by its parameter or attribute name and describe behavior rather than repeating its type annotation.
+- Keep documentation synchronized with behavior. When a public contract or important restriction changes, update its docstring and the relevant test in the same change.
+- Do not add boilerplate docstrings to trivial private helpers, test functions, or overridden methods whose inherited contract is unchanged. Do not document behavior that the code does not provide or tests do not support.
