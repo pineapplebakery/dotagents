@@ -43,23 +43,9 @@ When principles conflict, pick the simplest implementation that meets the curren
 - **Fail Fast**: Invalid input or broken assumptions must fail immediately at the boundary. Do not silently coerce and continue.
 - **Measure First**: Do not optimize until measurement or a public-boundary test gives evidence. Do not fit numbers by guesswork.
 
-## Runtime and API design
-
-- Import modules and qualify their members. Use direct symbol imports only where the type-checking convention permits them, such as `typing` and `collections.abc`; use full package paths for project modules.
-- Use built-in exception types when they describe the failure. Do not use `assert` for input validation, preconditions, or required runtime behavior; reserve it for internal invariants that can safely disappear under optimized execution.
-- Keep `try` blocks narrow. Catch only expected exceptions; do not use bare or broad catches unless re-raising or deliberately isolating and recording a failure. Error messages must describe the actual condition and include relevant values clearly.
-- Manage files, sockets, locks, database connections, and similar resources with `with` or an explicit `finally`. Do not rely on object destruction for cleanup. If ownership or lifetime is non-obvious, document it.
-- Avoid mutable module-level or class-level state. If it is required, keep it internal and document its ownership, lifetime, and reason for existence.
-- Keep comprehensions, generator expressions, conditional expressions, and lambdas simple. Prefer a loop or named helper when an expression needs multiple stages or non-obvious control flow.
-- Use nested functions only when they close over a local value. Otherwise, use a module-private helper so it remains testable. Avoid metaclasses, custom descriptors, import hacks, and other dynamic features unless a concrete requirement justifies them.
-- Do not use mutable default arguments. Use `None` and initialize inside the function, including when the mutable value comes from a custom object rather than a literal.
-- Keep executable work in `main()` behind `if __name__ == "__main__":`; importing a module must not run CLI handling, open resources, or perform expensive setup.
-- Give public APIs accurate argument and return annotations. Prefer abstract collection types at API boundaries, and use `Any` only at a deliberate dynamic boundary with a documented reason.
-
 ## Naming and comments
 
 - Use English identifiers.
-- Choose descriptive names and avoid unexplained, project-local abbreviations. Short names are acceptable for tightly scoped iterators or established mathematical notation.
 - Do not comment what the code already says.
 - When you comment, include **Why** the code is needed. Comments that mark steps in a flow are fine when they help understanding.
 - If you cannot take the simple path and must add complexity, record the constraint and why you chose that path at the site.
