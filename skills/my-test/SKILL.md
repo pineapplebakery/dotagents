@@ -40,4 +40,6 @@ pytest tests/path/to/test_module.py -q
 pytest -q
 ```
 
+Then run ruff as in [my-implement](../my-implement/SKILL.md).
+
 If pytest is not already part of the project's test setup, do not add it without user approval. If no test infrastructure exists, do not create one without a request.

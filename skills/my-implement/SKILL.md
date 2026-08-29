@@ -13,8 +13,16 @@ description: Implement or change Python code with a readable, simple structure. 
 4. Pick the simplest design that fits the existing structure.
 5. Implement the minimum needed to make the tests pass.
 6. Remove duplication and obscurity while keeping tests green.
-7. Run related tests and static checks, then review the change scope.
+7. Run related tests, then ruff as below, then review the change scope.
 8. Close the work plan's done-when with evidence.
+
+## Ruff after implementation
+
+After the implementation and tests are done, format and lint with ruff. Prefer `src` and `tests` when those directories exist; otherwise pass the Python files you changed. Do not run ruff on `vendor/`.
+
+1. If `uv` is available, run `uvx ruff format PATHS` then `uvx ruff check PATHS`.
+2. If ruff reports issues, fix them and run the same commands again until both succeed.
+3. If `uv` is not available, do not install ruff. In the completion report, state that ruff was not run.
 
 ## Design
 
