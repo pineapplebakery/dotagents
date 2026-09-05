@@ -8,6 +8,7 @@ Keep only guidance that applies across workspaces in this file. Put project-spec
 - Distinguish verified facts from assumptions. Do not present unverified information as fact.
 - Before starting, define observable conditions that determine completion. Ask questions only when unclear conditions would materially affect the result.
 - Confirm before making decisions that are destructive, externally visible, or require broader permissions.
+- Within the same request, reuse an approval only while its target, operation, impact, and applicable conditions remain unchanged. Confirm again when any of them changes. While approval is pending, continue independent work that is safe and already authorized. This does not replace approval required by the execution environment.
 
 ## Working principles
 
@@ -25,7 +26,8 @@ Keep only guidance that applies across workspaces in this file. Put project-spec
 ## Verification
 
 - Before claiming completion, verify the result with observable evidence proportionate to the change, such as tests, static checks, and diff review. State which checks were not run.
-- Start with focused, fast checks that avoid network access and external data where practical. Make randomized verification reproducible across runs.
+- Run checks required by the workspace regardless of change size. Otherwise, start with focused, fast checks and widen them according to the affected surface and risk. Avoid network access and external data where practical, and make randomized verification reproducible across runs.
+- Do not modify unrelated code or expected values to resolve pre-existing failures. Report those failures separately and continue independent checks when possible.
 - Confirm the need and execution conditions before running operations that take a long time, cost money, use substantial compute, or download large files.
 - Do not change configuration or expected values without evidence merely to make checks pass.
 - If no test infrastructure exists, do not create it without a request. Verify with available methods and propose new infrastructure if needed.
@@ -51,7 +53,7 @@ Use `ponytail-review` and `ponytail-audit` only when the user explicitly asks fo
 | Skill | When to use it | Path |
 |---|---|---|
 | my-work-plan | Create and update work plans in `docs/plans/` | `.agents/skills/my-work-plan/SKILL.md` |
-| my-git-commit | Review the change scope and create a Conventional Commits message | `.agents/skills/my-git-commit/SKILL.md` |
+| my-git-commit | Draft a Conventional Commits message or create the requested commit | `.agents/skills/my-git-commit/SKILL.md` |
 | my-implement | Add or change Python code with a simple structure and ruff verification | `.agents/skills/my-implement/SKILL.md` |
 | my-test | TDD and pytest workflow delegated by `my-implement`; standalone for test execution or analysis without code changes | `.agents/skills/my-test/SKILL.md` |
 | show-me | Visualize the current topic with a diagram, tree, Mermaid, or HTML | `.agents/skills/show-me/SKILL.md` |

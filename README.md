@@ -72,7 +72,7 @@ Do not turn unverified information into a rule. If missing information is essent
 
 ## What to include in workspace AGENTS.md
 
-`myAGENTS.md` is 58 lines. Aim for 25-40 lines in the workspace file so the combined instructions remain roughly 80-100 lines. Do not create a separate section for every possible concern; include only information needed to make decisions in that project.
+Keep the workspace file concise and easy to review. Do not create a separate section for every possible concern; include only information needed to make decisions in that project.
 
 ### 1. Purpose and references
 
@@ -85,7 +85,8 @@ Do not turn unverified information into a rule. If missing information is essent
 
 - Summarize locations that may be changed, locations that are normally unchanged, and generated artifacts that must not be committed.
 - Do not enumerate every directory. Include only paths where the rules affect whether or how an agent may change them.
-- When an exceptional change to a normally unchanged location is necessary, follow the `my-git-commit` skill and explain the reason in the commit body.
+- Treat read-only or prohibited locations separately from locations that are normally unchanged. A read-only or prohibited location requires explicit authorization for that exception. For a normally unchanged location, follow the exception conditions defined by the workspace.
+- Recording a reason does not grant permission. Record the reason for an authorized exception in the work report and, when the change is committed, in the commit body.
 
 ### 3. Verification
 
@@ -103,7 +104,7 @@ When only one subtree needs different instructions, place a short `AGENTS.md` or
 
 ## Copyable template
 
-This template is about 36 lines. Remove unused lines and do not leave bracketed placeholders in the finished file.
+This template is intentionally compact. Remove unused lines and do not leave bracketed placeholders in the finished file.
 
 ```markdown
 # Agent Instructions
@@ -124,9 +125,9 @@ When these instructions conflict with workspace-specific instructions in this fi
 
 | Path | Role and change rule |
 |---|---|
-| `[path]` | [Normally editable, normally unchanged, or generated] |
+| `[path]` | [Normally editable, normally unchanged, read-only, prohibited, or generated] |
 
-If a normally unchanged path must be modified, explain why in the commit body.
+Do not modify a read-only or prohibited path without explicit exception authorization. For a normally unchanged path, follow the workspace's exception conditions. Recording a reason is not authorization. Record an authorized exception in the work report and, when committed, in the commit body.
 
 ## Verification
 

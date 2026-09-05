@@ -1,11 +1,16 @@
 ---
 name: my-git-commit
-description: Create a Git commit in Conventional Commits format. Use when committing, writing a commit message, or when the user mentions Conventional Commits or git commit.
+description: Create a Git commit or draft a commit message in Conventional Commits format. Use when the user asks to commit changes or prepare or review a Conventional Commits message.
 ---
 
 # My Git Commit
 
-Follow this skill when committing and obey the applicable `AGENTS.md` instructions. Do not run `git push` or `git rm`. If those commands are needed, give them to the user.
+Follow this skill when committing or drafting a commit message, and obey the applicable `AGENTS.md` instructions. Do not run `git push` or `git rm`. If those commands are needed, give them to the user.
+
+## Modes
+
+- For an explanation, review, or message draft, return the proposed message without staging files or creating a commit.
+- Stage and commit only when the user explicitly requests a commit or an existing approval clearly includes those operations.
 
 ## Message
 
@@ -31,11 +36,12 @@ Follow this skill when committing and obey the applicable `AGENTS.md` instructio
 
 - Write Why. Do not restate What.
 - When the body has multiple paragraphs or sections, pass each one with a separate `-m` option. Do not write newline escape sequences such as `\n` or `¥n`.
-- If the commit changes a directory that applicable workspace instructions designate as read-only or normally unchanged, explain why the exception was necessary.
+- Do not change a read-only or prohibited location without explicit authorization for that exception. For a normally unchanged location, follow the workspace's exception conditions. Recording a reason does not grant permission.
+- Record the reason for an authorized exception in the work report and, when committing the change, in the commit body.
 
 ## Steps
 
-1. Check what to include with `git status` and `git diff`.
-2. `git add` only those files.
-3. Run `git commit` with the subject and each body paragraph passed as separate `-m` options.
-4. If a push is needed, do not run it. Hand the user the `git push` command and stop.
+1. Check what belongs to the request with `git status` and `git diff`.
+2. In draft mode, return the proposed subject and body without Git writes.
+3. In commit mode, `git add` only the related files, then run `git commit` with the subject and each body paragraph passed as a separate `-m` option.
+4. If a push is needed, do not run it. Give the user the `git push` command, then continue any independent work still in scope.

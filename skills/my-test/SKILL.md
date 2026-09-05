@@ -5,41 +5,52 @@ description: Apply the pytest TDD and staged test-verification procedure during 
 
 # My Test
 
+## Modes
+
+- For a request to run or analyze tests only, run the requested checks and report the results without editing project files. Diagnosing a failure does not authorize a fix.
+- When the request includes a production or test code change, apply the TDD cycle and verification guidance below.
+
 ## TDD cycle
+
+For new behavior and bug fixes:
 
 1. Pick one behavior a caller can observe after the change.
 2. Before changing production code, add or update a pytest test that states that behavior.
-3. Run only that test and confirm it fails for the right reason (missing implementation or the bug). Do not treat environment problems or a broken test as evidence to proceed.
+3. Run only that test and confirm it fails for the right reason: missing behavior or the reproduced bug. Do not treat environment problems or a broken test as evidence to proceed.
 4. Implement the minimum needed to pass the test.
 5. Refactor while keeping the tests green.
 6. Widen verification as described in [Running](#running).
 
-For refactors that must keep current behavior, first add characterization tests that lock that behavior. Do not require new tests for comment-only or docs-only changes that do not change runtime behavior.
+For behavior-preserving refactors, first confirm the relevant existing tests pass. Add a characterization test only when those tests do not adequately cover the behavior being preserved; the refactor does not require a failing test first. Do not require new tests for comment-only or docs-only changes that do not change runtime behavior.
 
 ## Test design
 
 - At the beginning of each test module or test group, state concisely what behavior the tests verify so their purpose remains clear when revisited.
 - Write tests with `pytest` and follow the project's existing test layout. If the project has no convention and the user authorizes a new pytest layout, use `tests/`.
 - Verify behavior from stable public boundaries, not internal steps of the implementation.
-- Keep tests with the behavior they verify: move a helper's unit test with its owning module, and keep runtime dataset tests independent of offline/preparation modules. For cross-path equivalence, use an independently specified expected fixture instead of calling the conversion under test to build the expectation.
+- Keep tests with the behavior they verify. When behavior changes ownership, move or update its tests to match the new owner. To compare equivalent behavior across components or paths, derive the expected value independently instead of calling the code under test to build it.
 - One test covers one behavior. Name it so a failure shows expected vs actual.
 - Prefer small inputs that run fast and deterministically. Fix seeds when using randomness.
-- Do not assume external datasets, large artifacts, specialized hardware, or network access for ordinary tests. Keep required integration tests clearly separate and state their requirements in the test.
+- Do not assume external data, large artifacts, specialized hardware, or network access for ordinary tests. Keep required integration tests clearly separate and state their requirements in the test.
 - Isolate side effects with `tmp_path`, `monkeypatch`, and fixtures. Avoid mocks that freeze implementation details.
 
 ## Running
 
-Use the project's configured test runner. With direct pytest invocation, fail fast on the target test:
+Run every test command required by the workspace. Otherwise, start with the smallest relevant pytest target and widen to the file, related scope, and full suite according to the affected surface and regression risk. A narrow isolated change may not require the full suite; shared or high-impact changes usually do.
+
+With direct pytest invocation, fail fast on the target test:
 
 ```bash
 pytest tests/path/to/test_module.py::test_name -q
 ```
 
-After implementing, widen to the file, related scope, then the full suite:
+Examples of wider scopes are:
 
 ```bash
 pytest tests/path/to/test_module.py -q
 pytest -q
 ```
+
+If a test cannot run, continue independent available checks and state what was not run and why. Do not change unrelated code or expected values to make a pre-existing failure pass.
 
 If pytest is not already part of the project's test setup, do not add it without user approval.

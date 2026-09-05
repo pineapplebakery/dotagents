@@ -1,23 +1,24 @@
 ---
 name: my-work-plan
-description: Create and update work plans as dated Markdown files under docs/plans/. Use for multi-step or large implementation, investigation, training/eval, debugging, or refactoring when you need to record steps, progress, completion, and remaining work.
+description: Create and update dated Markdown work plans under docs/plans/. Use for work with multiple deliverables or dependent phases, long-running or resumable work, or an explicit request for a plan.
 ---
 
 # My Work Plan
 
-Pin the request, goal, steps, and progress in Markdown and save it under `docs/plans/`. After a conversation break, the same file alone should be enough to resume.
+Pin the request, goal, steps, evidence, and next action in Markdown under `docs/plans/`. After a conversation break, the same file alone should be enough to resume.
 
 ## When to use
 
-- Work with **two or more** steps
-- Large changes, even when they fit in one step or one file
-- Work that mixes investigation and implementation
-- Training, evaluation, data prep, or other work that takes time or waits on confirmation
-- When the user asks to make the plan, progress, or remaining work explicit
+Evaluate the skip conditions before creating a plan. Use this skill when at least one of these applies:
+
+- The request has multiple deliverables or dependent phases that must stay coordinated
+- The work is long-running, may wait on a dependency or approval, or must be resumable after interruption
+- The user asks to make the plan, progress, or remaining work explicit
 
 Skip when:
 
-- A small one-command or one-file fix where a completion report is enough
+- A small task only has incidental inspection, editing, and verification steps
+- The request is a read-only review or analysis and the user did not ask for a plan file
 - The user says a plan is not needed
 
 ## Location and filename
@@ -46,31 +47,30 @@ Do not use vague "later" or "mostly done". Include all of the following every ti
 | Request | The gist of the instruction that created this plan. What, how far, and constraints. Do not paste the full prompt |
 | Goal | What the work is for (1–2 sentences) |
 | Done when | What must be observable to finish. Include how to verify (test names, commands) |
-| Design choices | Decisions taken in this work and why. Write "none" if there are none. Binding decisions go to an ADR |
-| Steps | **Numbered**. What to do, in what order, against which artifact or boundary |
-| Current | Which step number you are on. If in progress, what you are doing |
-| Completed | Finished steps. Each item needs evidence (paths, test results, command-result gist) |
-| Remaining | Steps not started or not finished. Note dependencies or blockers |
+| Steps | **Numbered**. Give each step a status and add evidence when done or the dependency when blocked |
 | Next action | One concrete next action. Note waits or dangerous operations if any |
+
+Use `Steps` as the single source of truth for progress. The `in progress` step is the current work, `done` steps contain completed work and evidence, and `pending` or `blocked` steps are the remaining work. Do not repeat them in separate Current, Completed, or Remaining sections. Include a `Design choices` section only when the work has actual decisions worth preserving; keep those decisions in this plan unless they meet the ADR criteria below.
 
 ## Writing rules
 
 - Write for a reader with no prior context. Do not rely on pronouns alone (avoid "that", "the previous one").
 - Summarize the user's instruction in Request. Do not substitute the agent's own restatement of goal or done-when. Do not paste the prompt or system text.
 - If the request changes mid-work, update Request and leave one sentence on what changed.
-- Design choices record what you picked and why (evidence, rejected options). Keep work-local choices in the plan. If they bind later work, write an ADR and link it from the plan.
+- When present, Design choices record what you picked and why, including useful evidence or rejected options. Keep work-local choices in the plan. If a choice meets the ADR criteria below, write an ADR and link it from the plan.
 - Make steps executable units (example: "Add a regression test for cache invalidation in `tests/test_cache.py`").
 - Use these status words: `pending` / `in progress` / `done` / `blocked` / `skipped` (give a reason when skipped).
+- Keep at most one step `in progress` at a time. Add paths, check results, or a concise command-result gist to a step when it becomes `done`.
 - Separate guess from confirmed fact. Mark unconfirmed items as "unconfirmed: …".
 - On update, make the whole file current. Do not leave the file stale after reporting a diff in chat.
 - This skill is the source of truth for plan criteria, format, location, and update timing. `AGENTS.md` owns shared skill routing and the invariant of where plans live.
 
 ## When to update
 
-1. **Before starting**: create the plan if none exists; otherwise update the current plan. Write request, goal, done-when, design choices, and steps before implementation.
-2. **After each step**: move it to Completed and update Current, Remaining, and Next action.
-3. **When blocked**: write what is missing and whose or what decision you are waiting on in Remaining and Next action.
-4. **When finished**: record every step's status and the evidence that done-when is met, then close the plan.
+1. **Before substantive work**: create the plan if none exists; otherwise update the current plan. Write the request, goal, done-when conditions, steps, and next action before substantive work.
+2. **After meaningful progress**: update the affected step's status and evidence, then set the next action. Do not rewrite the file for every minor command.
+3. **When blocked or redirected**: record the missing dependency or decision in the affected step, update the request when its scope changed, and set the next action.
+4. **When finished**: record every step's final status and evidence that the done-when conditions are met, set the plan status to `done`, and set the next action to `none`.
 
 ## Template
 
@@ -94,32 +94,24 @@ New file skeleton:
 
 - [ ] (Observable condition and how to verify)
 
-## Design choices
-
-- (or "none")
-
 ## Steps
 
 1. [pending] …
 2. [pending] …
 3. [pending] …
 
-## Current
-
-- Step N: (what is in progress / if none: "pending. Next is step 1")
-
-## Completed
-
-- (or "none")
-
-## Remaining
-
-- (step numbers and content; reason if blocked)
-
 ## Next action
 
 - Next: …
 - Notes: (or "none")
+```
+
+Add this section only when the work has decisions worth preserving:
+
+```markdown
+## Design choices
+
+- (Decision and why it was chosen)
 ```
 
 ## When to write an ADR
@@ -128,11 +120,12 @@ This skill records planning decisions and ADRs. It does not define code-level de
 
 Do not copy the plan's Design choices. Write to `docs/adr/` only when one of these applies:
 
-- It binds later implementation, configuration, an external integration, or a public interface
-- Other work will treat it as a given
-- A strong rejected option exists and you need to prevent revisiting it
+- The decision establishes a long-lived project boundary, public API or external contract, or external integration policy
+- The decision is expensive to change or difficult to reverse
+- A strong rejected option must be recorded to prevent costly reconsideration
+- The workspace requires an ADR for the decision
 
-Keep local Why in a code comment. Keep choices that apply only to this work in the plan's Design choices. Do not create a dedicated ADR skill.
+Keep local Why in a code comment. Keep local, easily changed choices in the plan's Design choices. Do not create a dedicated ADR skill.
 
 | Item | Rule |
 |---|---|
