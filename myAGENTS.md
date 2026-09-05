@@ -26,6 +26,7 @@ Keep only guidance that applies across workspaces in this file. Put project-spec
 ## Verification
 
 - Before claiming completion, verify the result with observable evidence proportionate to the change, such as tests, static checks, and diff review. State which checks were not run.
+- If a required check is not run or does not pass, distinguish "implementation complete" from "verification complete" in the report. Unless applicable instructions explicitly exempt the check, do not treat it as optional or claim that the completion conditions are met. Continue any independent checks that can still run.
 - Run checks required by the workspace regardless of change size. Otherwise, start with focused, fast checks and widen them according to the affected surface and risk. Avoid network access and external data where practical, and make randomized verification reproducible across runs.
 - Do not modify unrelated code or expected values to resolve pre-existing failures. Report those failures separately and continue independent checks when possible.
 - Confirm the need and execution conditions before running operations that take a long time, cost money, use substantial compute, or download large files.
