@@ -32,7 +32,7 @@ workspace/
 To install third-party skills, run this command from the workspace root:
 
 ```bash
-sh .agents/skill-install.sh
+bash .agents/skill-install.sh
 ```
 
 Start the workspace `AGENTS.md` with an explicit instruction to read the shared guidance:

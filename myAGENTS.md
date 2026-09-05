@@ -44,6 +44,10 @@ Use a skill only when its file exists.
 
 For Python code changes, including tests, use `my-implement` as the parent workflow when it exists. It delegates plan lifecycle to `my-work-plan` when required and TDD and test verification to `my-test`; those child workflows do not call back to the parent. A child may be used independently when `my-implement` does not apply or is unavailable.
 
+When `ponytail` is also active for a Python code change, `my-work-plan`, `my-implement`, and `my-test` take precedence for planning, implementation workflow, test framework and TDD, staged verification, ruff, and docstrings. Apply `ponytail` only to implementation simplicity within those requirements; do not use its minimal-check policy to weaken them.
+
+Use `ponytail-review` and `ponytail-audit` only when the user explicitly asks for an overengineering or complexity review. They do not replace a general review for correctness, regressions, security, performance, or test coverage.
+
 | Skill | When to use it | Path |
 |---|---|---|
 | my-work-plan | Create and update work plans in `docs/plans/` | `.agents/skills/my-work-plan/SKILL.md` |
@@ -52,9 +56,14 @@ For Python code changes, including tests, use `my-implement` as the parent workf
 | my-test | TDD and pytest workflow delegated by `my-implement`; standalone for test execution or analysis without code changes | `.agents/skills/my-test/SKILL.md` |
 | show-me | Visualize the current topic with a diagram, tree, Mermaid, or HTML | `.agents/skills/show-me/SKILL.md` |
 | eli5 | Explain code or technical concepts with accessible language and examples | `.agents/skills/eli5/SKILL.md` |
-| ponytail | Prefer the shortest working implementation, YAGNI, standard features, and native features | `.agents/skills/ponytail/SKILL.md` |
-| ponytail-review | Review the current diff for overengineering | `.agents/skills/ponytail-review/SKILL.md` |
-| ponytail-audit | Audit the workspace for overengineering | `.agents/skills/ponytail-audit/SKILL.md` |
+| ponytail | Simplify implementation within applicable workflow and verification requirements | `.agents/skills/ponytail/SKILL.md` |
+| ponytail-review | Review the current diff specifically for overengineering when requested | `.agents/skills/ponytail-review/SKILL.md` |
+| ponytail-audit | Audit the workspace specifically for overengineering when requested | `.agents/skills/ponytail-audit/SKILL.md` |
 | ponytail-debt | List debt recorded in `ponytail:` comments | `.agents/skills/ponytail-debt/SKILL.md` |
+
+<!-- Disabled because its benchmark evidence is not included in the installed Skill:
 | ponytail-gain | Show the effect of ponytail simplifications in a scoreboard | `.agents/skills/ponytail-gain/SKILL.md` |
+-->
+<!-- Disabled because its auto-update guidance bypasses `skill-install.sh`:
 | ponytail-help | Show how to use ponytail commands | `.agents/skills/ponytail-help/SKILL.md` |
+-->

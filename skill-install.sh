@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-set -eu
+set -euo pipefail
 
 repository_directory=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 destination="$repository_directory/skills"
@@ -25,14 +25,24 @@ tar -xzf "$temporary_directory/show-me.tar.gz" -C "$temporary_directory"
 tar -xzf "$temporary_directory/eli5.tar.gz" -C "$temporary_directory"
 
 copy_skill() {
-  source_directory=$1
-  skill=$2
+  local source_directory=$1
+  local skill=$2
+
   test -f "$source_directory/SKILL.md"
   mkdir -p "$destination/$skill"
   cp -R "$source_directory/." "$destination/$skill/"
 }
 
-for skill in ponytail ponytail-audit ponytail-debt ponytail-gain ponytail-help ponytail-review; do
+# Ponytail has many skills, but only the selected workflows are installed.
+ponytail_skills=(
+  ponytail
+  ponytail-audit
+  ponytail-debt
+  # ponytail-gain  # Disabled because its benchmark evidence is not included in the installed Skill.
+  # ponytail-help  # Disabled because its auto-update guidance bypasses this reviewed installer.
+  ponytail-review
+)
+for skill in "${ponytail_skills[@]}"; do
   copy_skill "$temporary_directory/ponytail-main/skills/$skill" "$skill"
 done
 
