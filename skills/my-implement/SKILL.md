@@ -53,9 +53,8 @@ When principles conflict, pick the simplest implementation that meets the curren
 
 ## Docstrings
 
-- Document public modules, classes, functions, and methods when callers need to know how to use them. Add a docstring to private code when its behavior, constraints, or side effects are not obvious from the code.
-- Start with the caller-visible purpose. Do not describe the implementation line by line or repeat a clear function name.
-- For non-trivial APIs, describe the parts a caller cannot infer reliably from the signature: parameter meaning and valid values, units/shapes/devices, default behavior, return structure, side effects, resource ownership, preconditions, and relevant exceptions.
-- Use `Args`, `Returns`, `Yields`, `Raises`, or `Attributes` sections when those details exist. List each item by its parameter or attribute name and describe behavior rather than repeating its type annotation.
+- Document public modules, classes, functions, and methods regardless of complexity. Start each docstring with a concise overview of its caller-visible purpose.
+- For public APIs, include applicable `Args`, `Returns`, `Yields`, `Raises`, and `Attributes` sections. Describe parameter meaning and valid values, units/shapes/devices, default behavior, return structure, side effects, resource ownership, preconditions, and relevant exceptions when they cannot be inferred reliably from the signature.
+- Keep each `Args` item concise and on a single line.
 - Keep documentation synchronized with behavior. When a public contract or important restriction changes, update its docstring and the relevant test in the same change.
-- Do not add boilerplate docstrings to trivial private helpers, test functions, or overridden methods whose inherited contract is unchanged. Do not document behavior that the code does not provide or tests do not support.
+- For simple private helpers, the overview is sufficient. Do not add boilerplate docstrings to test functions or overridden methods whose inherited contract is unchanged. Do not document behavior that the code does not provide or tests do not support.
