@@ -1,4 +1,4 @@
 interface:
   display_name: "My Git Commit"
-  short_description: "Draft or create Conventional Commits"
-  default_prompt: "Use $my-git-commit to draft a Conventional Commits message or create the requested commit."
+  short_description: "Draft or create contextual Conventional Commits"
+  default_prompt: "Use $my-git-commit to draft or create a Conventional Commit that preserves relevant reasoning without restating the diff."
