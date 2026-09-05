@@ -7,6 +7,7 @@
 
 - Apply the decisions made for the adversarial review of the shared instructions and maintained Skills. Preserve the findings explicitly rejected by the user, and do not modify gitignored third-party Skills.
 - The user later requested a numbered decision table with rationale so each finding remains understandable without the review conversation.
+- After comparing HEAD with `f86a64a`, the user requested restoration of any weakened instruction that has neither a conflict nor meaningful duplication.
 
 ## Goal
 
@@ -19,6 +20,7 @@ Remove ambiguous permissions, duplicated progress records, overbroad triggers, a
 - [x] Rejected findings 1, 6, 12, and 15 remain unchanged in substance.
 - [x] All maintained Skills pass structural validation and the final diff has no whitespace errors or unintended third-party changes.
 - [x] A numbered table records every finding, its disposition, rationale, and affected files.
+- [x] The concrete DRY knowledge-ownership rule from `f86a64a` is retained without restoring conflicting mechanical helper-extraction constraints.
 
 ## Review decisions
 
@@ -34,7 +36,7 @@ Remove ambiguous permissions, duplicated progress records, overbroad triggers, a
 | 8 | Read-only and normally unchanged locations are conflated | Adopt | Recording a reason cannot grant permission. Read-only or prohibited locations require explicit exception authorization; normally unchanged locations follow workspace-defined exception conditions. | `README.md`, `skills/my-git-commit/SKILL.md` |
 | 9 | Refactoring can be forced to start with a failing test | Adopt | Behavior-preserving refactoring should begin from passing coverage. Characterization tests are needed only when existing tests do not adequately protect the behavior. | `skills/my-test/SKILL.md` |
 | 10 | A plan repeats progress in several sections | Adopt | `Steps` can retain current, completed, remaining, evidence, and blocker information in one place. Keeping `Next action` separately preserves resumability without synchronization overhead. | `skills/my-work-plan/SKILL.md` |
-| 11 | Design principles repeat the same rule under different names | Adopt | Repeated KISS/YAGNI/SOLID/Open-Closed descriptions increase interpretation cost. The text now uses actionable rules while retaining distinct constraints for interfaces, extension points, composition, fail-fast behavior, and evidence-based optimization. | `skills/my-implement/SKILL.md` |
+| 11 | Design principles repeat the same rule under different names | Adopt | Repeated KISS/YAGNI/SOLID/Open-Closed descriptions increase interpretation cost. The text now uses actionable rules while retaining distinct constraints for DRY knowledge ownership, interfaces, extension points, composition, fail-fast behavior, and evidence-based optimization. | `skills/my-implement/SKILL.md` |
 | 12 | General principles overlap between shared and Python instructions | No standalone change | The overlap is intentional layering: `myAGENTS.md` owns cross-workspace judgment, while `my-implement` gives Python-specific application rules. Only the internal duplication identified in No. 11 was consolidated. | Existing ownership retained |
 | 13 | Function line-count guidance creates mechanical work | Partial adopt | The 30/50-line figures remain useful review signals, but they are not split thresholds. A Why comment is required only for a non-obvious constraint, not merely because a function is long. | `skills/my-implement/SKILL.md` |
 | 14 | ADR creation criteria are too broad | Adopt | ADRs should capture durable boundaries, contracts, external integration policy, expensive-to-reverse choices, or significant rejected alternatives. Local and easily changed choices belong in the work plan. | `skills/my-work-plan/SKILL.md` |
@@ -47,6 +49,7 @@ Remove ambiguous permissions, duplicated progress records, overbroad triggers, a
 
 - Keep `my-implement` Python-specific and keep pytest as the required test framework, as the user decided.
 - Consolidate repeated design principles without removing the concrete interface, extension-point, composition, fail-fast, or measurement rules.
+- Keep the concrete DRY rule because avoiding duplicated knowledge or reasons to change is not equivalent to choosing a simple structure or rejecting speculative abstractions.
 - Store work-local design decisions in the plan; reserve ADRs for durable or expensive-to-change decisions.
 
 ## Steps
@@ -55,6 +58,7 @@ Remove ambiguous permissions, duplicated progress records, overbroad triggers, a
 2. [done] Updated `myAGENTS.md`, `README.md`, and the four maintained Skills. Synchronized affected `agents/openai.yaml` metadata, preserved pytest-only testing and test-purpose statements, and left third-party Skills unchanged.
 3. [done] Validated all four maintained Skill frontmatters and `agents/openai.yaml` files with the existing Ruby YAML parser, confirmed the adopted and rejected rule markers, and passed `git diff --check`. The bundled validator could not start because PyYAML is not installed, so no dependency was added; the equivalent validations from its source passed. The changed-file list contains no gitignored third-party Skill.
 4. [done] Added the numbered review-decision table with rationale and file-level traceability to this plan.
+5. [done] Compared the original instructions at `f86a64a` with HEAD and restored the non-overlapping DRY knowledge-ownership criterion that had been weakened during No. 11 consolidation.
 
 ## Next action
 
