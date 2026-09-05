@@ -20,7 +20,7 @@ Follow this skill when committing or drafting a commit message, and obey the app
 <body>
 ```
 
-`scope` is optional. `subject` is imperative English with no trailing period.
+The subject `scope` is optional. `subject` is imperative English with no trailing period.
 
 | type | When |
 |---|---|
@@ -51,7 +51,7 @@ When the session contains reasoning that the diff cannot show, add only the appl
 | `constraint(scope)` | A non-obvious boundary that shaped the change |
 | `learned(scope)` | A discovered fact that will prevent future rework |
 
-- Format each entry as one line: `type(scope): description`. Use lowercase letters, digits, and internal hyphens for a non-empty scope from the project's vocabulary, consistently across commits. It may differ from the subject scope.
+- Format each entry as one line: `type(scope): description`. A context-line `scope` is required: it must be non-empty, use lowercase letters and digits with internal hyphens, and must not begin or end with a hyphen. Context-line and subject scopes are independent and may differ; keep context-line scopes consistent across commits.
 - Context lines are optional. Omit them for trivial changes or when they would only restate the diff.
 - Use evidence from the request, discussion, and observed work. Reflect the user's purpose in `intent`, always give a reason in `rejected`, and do not fabricate unavailable context. Without conversation context, use `decision` only when the technical choice and useful reasoning are clearly evidenced without speculation; do not infer the other types from the diff.
 - The subject and body must accurately cover every change included in the commit. Keep unrelated changes out, and leave unknown reasoning unstated rather than guessing.
@@ -60,5 +60,5 @@ When the session contains reasoning that the diff cannot show, add only the appl
 
 1. Check what belongs to the request with `git status`, `git diff`, and `git diff --cached`. Existing staged content is a candidate scope, not permission to include changes outside the request.
 2. In draft mode, return the proposed subject and body without Git writes.
-3. In commit mode, `git add` only the related files, then run `git commit` with the subject and each body paragraph or context line passed as a separate `-m` option.
+3. In commit mode, stage only the related changes, not merely the related files. Use patch or interactive staging when a file mixes related and unrelated changes, and preserve unrelated staged changes. If unrelated changes are already staged, do not let a normal commit include them. Before committing, verify that the staged diff contains only the requested changes. If the changes cannot be safely separated, report the mixed scope and ask for confirmation before changing the index or creating a commit. Otherwise, run `git commit` with the subject and each body paragraph or context line passed as a separate `-m` option.
 4. If a push is needed, do not run it. Give the user the `git push` command, then continue any independent work still in scope.
