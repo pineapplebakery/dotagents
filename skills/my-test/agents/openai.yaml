@@ -1,4 +1,4 @@
 interface:
   display_name: "My Test"
-  short_description: "Pytest TDD, test execution, and scoped verification"
-  default_prompt: "Use $my-test to change code with pytest TDD or to run and analyze tests without edits."
+  short_description: "Test-only changes, pytest checks, and delegated TDD"
+  default_prompt: "Use $my-test for test-only changes or to run and analyze the relevant pytest checks without editing production code."

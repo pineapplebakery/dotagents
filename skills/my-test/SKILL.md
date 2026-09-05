@@ -1,6 +1,6 @@
 ---
 name: my-test
-description: Apply the pytest TDD and staged test-verification procedure during Python code changes, or run and analyze tests without changing Python code.
+description: Run and analyze pytest checks, and add or correct test code for test-only requests. Also provide the TDD and staged-verification child workflow when my-implement delegates a Python code change. Use independently for test-only changes, execution, or analysis; use as a child for production-code changes when my-implement is available.
 ---
 
 # My Test
@@ -8,7 +8,8 @@ description: Apply the pytest TDD and staged test-verification procedure during 
 ## Modes
 
 - For a request to run or analyze tests only, run the requested checks and report the results without editing project files. Diagnosing a failure does not authorize a fix.
-- When the request includes a production or test code change, apply the TDD cycle and verification guidance below.
+- For a test-only change, such as adding or correcting tests, use this skill independently and apply the test-design and verification guidance below. Do not change production code in this mode. If the test change shows that production code must change, hand the production-code change off to `my-implement`.
+- When delegated by `my-implement`, or when `my-implement` is unavailable and the request includes a production-code change, apply the TDD cycle and verification guidance below.
 
 ## TDD cycle
 
@@ -25,7 +26,7 @@ For behavior-preserving refactors, first confirm the relevant existing tests pas
 
 ## Test design
 
-- At the beginning of each test module or test group, state concisely what behavior the tests verify so their purpose remains clear when revisited.
+- When adding tests, write a docstring that states what behavior they verify. Use a module docstring for a new test module. Use a function docstring on each added test in an existing module, even if neighboring tests have no docstring. A one-line overview is enough.
 - Write tests with `pytest` and follow the project's existing test layout. If the project has no convention and the user authorizes a new pytest layout, use `tests/`.
 - Verify behavior from stable public boundaries, not internal steps of the implementation.
 - Keep tests with the behavior they verify. When behavior changes ownership, move or update its tests to match the new owner. To compare equivalent behavior across components or paths, derive the expected value independently instead of calling the code under test to build it.
