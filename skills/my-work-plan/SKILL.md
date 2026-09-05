@@ -1,6 +1,6 @@
 ---
 name: my-work-plan
-description: Create and update dated Markdown work plans under docs/plans/. Use for work with multiple deliverables or dependent phases, long-running or resumable work, or an explicit request for a plan.
+description: Decide whether work needs a dated Markdown plan under docs/plans/, then create and update it when required. Use as the planning child of my-implement, or independently for coordinated deliverables or phases, behavior or configuration changes with unresolved design choices, long-running or resumable work, or an explicit plan request. Do not invoke independently for read-only analysis, comment, typo, or docs-only edits, or a single obvious fix unless a plan is explicitly requested.
 ---
 
 # My Work Plan
@@ -9,17 +9,20 @@ Pin the request, goal, steps, evidence, and next action in Markdown under `docs/
 
 ## When to use
 
-Evaluate the skip conditions before creating a plan. Use this skill when at least one of these applies:
+When `my-implement` delegates planning, apply these criteria even when the result is to skip the plan file. For independent use, use this skill when at least one of these applies:
 
 - The request has multiple deliverables or dependent phases that must stay coordinated
+- A caller-visible behavior or configuration will change and requires coordinated steps or a non-obvious choice
+- A name, default, or behavior split still has to be chosen
 - The work is long-running, may wait on a dependency or approval, or must be resumable after interruption
 - The user asks to make the plan, progress, or remaining work explicit
 
-Skip when:
+If the user says a plan is not needed, skip it. Otherwise, an explicit plan request overrides the remaining skip conditions. Without an explicit request, skip the plan file when:
 
-- A small task only has incidental inspection, editing, and verification steps
+- The work is incidental inspection, a comment/typo/docs-only edit, or a single obvious fix with no remaining design choice
 - The request is a read-only review or analysis and the user did not ask for a plan file
-- The user says a plan is not needed
+
+Skipping the plan file does not skip deciding. Before editing, put the observable done-when conditions in the first progress update and include any non-obvious assumption. If an unspecified choice would materially affect the result, ask before editing; otherwise choose a reasonable default and state it when relevant.
 
 ## Location and filename
 
@@ -67,7 +70,7 @@ Use `Steps` as the single source of truth for progress. The `in progress` step i
 
 ## When to update
 
-1. **Before substantive work**: create the plan if none exists; otherwise update the current plan. Write the request, goal, done-when conditions, steps, and next action before substantive work.
+1. **Before substantive work**: apply the usage and skip criteria. If a plan for this request exists, update it. If none exists and skip applies, do not create one; follow the pre-edit rule above. Otherwise, create the plan with the request, goal, done-when conditions, steps, and next action.
 2. **After meaningful progress**: update the affected step's status and evidence, then set the next action. Do not rewrite the file for every minor command.
 3. **When blocked or redirected**: record the missing dependency or decision in the affected step, update the request when its scope changed, and set the next action.
 4. **When finished**: record every step's final status and evidence that the done-when conditions are met, set the plan status to `done`, and set the next action to `none`.

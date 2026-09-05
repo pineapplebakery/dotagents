@@ -1,13 +1,13 @@
 ---
 name: my-implement
-description: Implement or change Python code with a readable, simple structure. Follow KISS, YAGNI, DRY, and Why comments. Use when adding features, fixing bugs, refactoring, or integrating external code.
+description: Parent workflow for implementing or changing Python code with a readable, simple structure. Use for Python features, bug fixes, refactors, or external-code integration; delegate planning decisions and pytest TDD to the maintained child skills.
 ---
 
 # My Implement
 
 ## Workflow
 
-1. Before coding, apply the usage criteria in [my-work-plan](../my-work-plan/SKILL.md) and initialize or resume the plan as instructed there. Follow its [When to update](../my-work-plan/SKILL.md#when-to-update), including after each plan step.
+1. Before coding, follow [my-work-plan](../my-work-plan/SKILL.md) for the plan-file decision, pre-work requirements, and [update timing](../my-work-plan/SKILL.md#when-to-update).
 2. If a refactor removes a caller or changes which component owns behavior, search all production and test references before choosing the destination. Move a helper to its sole production owner, and keep it shared only when multiple production consumers need it. Move or update the related tests to match the new ownership.
 3. Implement by following [my-test](../my-test/SKILL.md), which owns the test-first workflow, verification sequence, and pytest setup policy.
 4. Run the applicable ruff checks below and review the change scope. Ruff and diff review remain useful even when a test cannot run.
@@ -51,4 +51,4 @@ When these rules compete, choose the simplest implementation that meets the curr
 - For public APIs, include applicable `Args`, `Returns`, `Yields`, `Raises`, and `Attributes` sections. Describe parameter meaning and valid values, units/shapes/devices, default behavior, return structure, side effects, resource ownership, preconditions, and relevant exceptions when they cannot be inferred reliably from the signature.
 - Keep each `Args` item concise and on a single line.
 - Keep documentation synchronized with behavior. When a public contract or important restriction changes, update its docstring and the relevant test in the same change.
-- For simple private helpers, the overview is sufficient. Do not add boilerplate docstrings to test functions or overridden methods whose inherited contract is unchanged. Do not document behavior that the code does not provide or tests do not support.
+- For simple private helpers, the overview is sufficient. Test purpose docstrings follow [my-test](../my-test/SKILL.md); do not add Args/Returns sections to tests. Do not add boilerplate docstrings to overridden methods whose inherited contract is unchanged. Do not document behavior that the code does not provide or tests do not support.

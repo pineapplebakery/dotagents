@@ -1,4 +1,4 @@
 interface:
   display_name: "My Work Plan"
-  short_description: "Track resumable work and evidence in docs/plans/"
+  short_description: "Decide and track coordinated work plans"
   default_prompt: "Use $my-work-plan to create or update a dated Markdown work plan under docs/plans/."
