@@ -18,7 +18,7 @@ description: Parent workflow for implementing or changing Python code with a rea
 Follow the workspace's required Ruff scope and command when documented in `AGENTS.md`, `README.md`, project configuration, or CI. Otherwise, format and lint the changed Python files with an already installed project Ruff; do not broaden the scope to all of `src` or `tests` by default, and do not include vendored code.
 
 1. Prefer the project's documented command. If none exists, use an already installed `ruff` executable and run `ruff format PATHS` followed by `ruff check PATHS`.
-2. Do not install or download Ruff automatically. A package runner such as `uvx ruff` requires user approval when it would retrieve Ruff externally.
+2. Do not install or download Ruff automatically; if an installed `ruff` executable is unavailable, skip Ruff and report it.
 3. Fix issues caused by or within the requested change and rerun the applicable commands. Do not modify unrelated code for pre-existing violations; report them separately.
 4. After Ruff formatting, inspect the diff. Unless the workspace requires whole-file formatting, exclude formatting-only changes to pre-existing code unrelated to the request. If those changes cannot be separated safely without altering the user's existing changes, report the constraint and Ruff result; do not revert user changes or modify out-of-scope code solely to resolve the formatting diff.
 5. If Ruff is unavailable, continue other independent checks and state in the completion report that Ruff was not run.
