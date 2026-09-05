@@ -18,6 +18,7 @@ For refactors that must keep current behavior, first add characterization tests 
 
 ## Test design
 
+- At the beginning of each test module or test group, state concisely what behavior the tests verify so their purpose remains clear when revisited.
 - Write tests with `pytest` and follow the project's existing test layout. If the project has no convention and the user authorizes a new pytest layout, use `tests/`.
 - Verify behavior from stable public boundaries, not internal steps of the implementation.
 - Keep tests with the behavior they verify: move a helper's unit test with its owning module, and keep runtime dataset tests independent of offline/preparation modules. For cross-path equivalence, use an independently specified expected fixture instead of calling the conversion under test to build the expectation.
