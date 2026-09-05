@@ -1,6 +1,6 @@
 ---
 name: my-work-plan
-description: Create and update multi-step work plans as dated Markdown files under docs/plans/. Use for implementation, investigation, training/eval, debugging, or refactoring when you need to record steps, progress, completion, and remaining work.
+description: Create and update work plans as dated Markdown files under docs/plans/. Use for multi-step or large implementation, investigation, training/eval, debugging, or refactoring when you need to record steps, progress, completion, and remaining work.
 ---
 
 # My Work Plan
@@ -10,13 +10,14 @@ Pin the request, goal, steps, and progress in Markdown and save it under `docs/p
 ## When to use
 
 - Work with **two or more** steps
+- Large changes, even when they fit in one step or one file
 - Work that mixes investigation and implementation
 - Training, evaluation, data prep, or other work that takes time or waits on confirmation
 - When the user asks to make the plan, progress, or remaining work explicit
 
 Skip when:
 
-- A one-command or one-file fix where a completion report is enough
+- A small one-command or one-file fix where a completion report is enough
 - The user says a plan is not needed
 
 ## Location and filename
@@ -34,7 +35,7 @@ Examples:
 - `docs/plans/2026-08-22-api-refactor.md`
 - `docs/plans/2026-08-22-cache-debugging.md`
 
-Create the file when you start. Later progress updates **overwrite the same file**. Chat may summarize, but `docs/plans/` is the source of truth.
+Progress updates **overwrite the current plan file**. Chat may summarize, but `docs/plans/` is the source of truth.
 
 ## Required sections
 
@@ -62,11 +63,11 @@ Do not use vague "later" or "mostly done". Include all of the following every ti
 - Use these status words: `pending` / `in progress` / `done` / `blocked` / `skipped` (give a reason when skipped).
 - Separate guess from confirmed fact. Mark unconfirmed items as "unconfirmed: …".
 - On update, make the whole file current. Do not leave the file stale after reporting a diff in chat.
-- This skill is the source of truth for format, location, and when to update. `AGENTS.md` only records the invariant of where plans live.
+- This skill is the source of truth for plan criteria, format, location, and update timing. `AGENTS.md` owns shared skill routing and the invariant of where plans live.
 
 ## When to update
 
-1. **Before starting**: create `docs/plans/YYYY-MM-DD-<slug>.md` and write request, goal, done-when, design choices, and steps before implementation.
+1. **Before starting**: create the plan if none exists; otherwise update the current plan. Write request, goal, done-when, design choices, and steps before implementation.
 2. **After each step**: move it to Completed and update Current, Remaining, and Next action.
 3. **When blocked**: write what is missing and whose or what decision you are waiting on in Remaining and Next action.
 4. **When finished**: record every step's status and the evidence that done-when is met, then close the plan.
@@ -123,6 +124,8 @@ New file skeleton:
 
 ## When to write an ADR
 
+This skill records planning decisions and ADRs. It does not define code-level design or implementation procedures.
+
 Do not copy the plan's Design choices. Write to `docs/adr/` only when one of these applies:
 
 - It binds later implementation, configuration, an external integration, or a public interface
@@ -151,13 +154,3 @@ Skeleton:
 
 ## Consequences
 ```
-
-## Relation to other skills
-
-- Follow [my-implement](../my-implement/SKILL.md) when coding.
-- Follow [my-test](../my-test/SKILL.md) for how to test.
-- This skill covers creating, saving, and updating the work plan, and recording binding decisions as ADRs. It does not replace the design workflow in [my-implement](../my-implement/SKILL.md).
-
-## Hook into the implement skill
-
-For multi-step implementation or fixes, update the plan file with this skill before and after `implement` work. Do not make large changes without a plan file.

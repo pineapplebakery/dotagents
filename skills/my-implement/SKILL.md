@@ -7,15 +7,11 @@ description: Implement or change Python code with a readable, simple structure. 
 
 ## Workflow
 
-1. Read the applicable `AGENTS.md` files, relevant project documentation, the files you will change, and their callers.
-2. If the work is multi-step, follow [my-work-plan](../my-work-plan/SKILL.md) and write the goal, done-when, and steps in `docs/plans/YYYY-MM-DD-<slug>.md` before coding. Update that file as each step finishes.
-3. Follow [my-test](../my-test/SKILL.md): express the expected behavior as a pytest test before changing production code, and confirm it fails for the intended reason. If pytest is not already part of the project's test setup, obtain user approval before adding it.
-4. If a refactor removes a caller or moves behavior between runtime and offline/preparation paths, audit ownership before choosing the module: search all production and test references, classify each helper by its remaining production consumers, and move a helper to its sole production owner. Keep it shared only when multiple production consumers need it.
-5. Pick the simplest design that fits the existing structure.
-6. Implement the minimum needed to make the tests pass.
-7. Remove duplication and obscurity while keeping tests green.
-8. Run related tests, then ruff as below, then review the change scope.
-9. Close the work plan's done-when with evidence.
+1. Before coding, apply the usage criteria in [my-work-plan](../my-work-plan/SKILL.md) and initialize or resume the plan as instructed there. Follow its [When to update](../my-work-plan/SKILL.md#when-to-update), including after each plan step.
+2. If a refactor removes a caller or moves behavior between runtime and offline/preparation paths, audit ownership before choosing the module: search all production and test references, classify each helper by its remaining production consumers, and move a helper to its sole production owner. Keep it shared only when multiple production consumers need it.
+3. Implement by following [my-test](../my-test/SKILL.md), which owns the test-first workflow, verification sequence, and pytest setup policy.
+4. After that verification succeeds, run ruff as below and review the change scope.
+5. If a work plan is in use, return to [my-work-plan](../my-work-plan/SKILL.md) and close it with evidence.
 
 ## Ruff after implementation
 

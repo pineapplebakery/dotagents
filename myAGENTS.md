@@ -19,15 +19,15 @@ Keep only guidance that applies across workspaces in this file. Put project-spec
 - Before adding a dependency, check whether existing dependencies or standard features can solve the problem. Obtain user approval before adding dependencies.
 - Do not output, record, or commit credentials, private keys, tokens, or other secrets.
 - Do not commit generated artifacts or large data unless the workspace explicitly identifies them as tracked files.
-- For multi-step work, use the `my-work-plan` skill and save and update the plan in `docs/plans/`.
+- When work requires a plan, follow the `my-work-plan` skill and keep the plan in `docs/plans/`.
 - If the same failure recurs, propose a rule that prevents it. Put workspace-specific rules in that workspace's `AGENTS.md`; add only cross-workspace rules to this file.
 
 ## Verification
 
 - Before claiming completion, verify the result with observable evidence proportionate to the change, such as tests, static checks, and diff review. State which checks were not run.
-- Start with focused, fast, deterministic checks that avoid network access and external data where practical.
+- Start with focused, fast checks that avoid network access and external data where practical. Make randomized verification reproducible across runs.
 - Confirm the need and execution conditions before running operations that take a long time, cost money, use substantial compute, or download large files.
-- Make tests that use randomness reproducible, for example by fixing seeds. Do not change configuration or expected values without evidence merely to make checks pass.
+- Do not change configuration or expected values without evidence merely to make checks pass.
 - If no test infrastructure exists, do not create it without a request. Verify with available methods and propose new infrastructure if needed.
 - For new behavior and bug fixes, when suitable test infrastructure exists, first capture the expected behavior in a test.
 
@@ -42,12 +42,14 @@ Keep only guidance that applies across workspaces in this file. Put project-spec
 
 Use a skill only when its file exists.
 
+For Python code changes, including tests, use `my-implement` as the parent workflow when it exists. It delegates plan lifecycle to `my-work-plan` when required and TDD and test verification to `my-test`; those child workflows do not call back to the parent. A child may be used independently when `my-implement` does not apply or is unavailable.
+
 | Skill | When to use it | Path |
 |---|---|---|
-| my-work-plan | Create and update a multi-step work plan and record progress and completion evidence in `docs/plans/` | `.agents/skills/my-work-plan/SKILL.md` |
+| my-work-plan | Create and update work plans in `docs/plans/` | `.agents/skills/my-work-plan/SKILL.md` |
 | my-git-commit | Review the change scope and create a Conventional Commits message | `.agents/skills/my-git-commit/SKILL.md` |
-| my-implement | Add features, fix bugs, or refactor Python using a simple, readable structure | `.agents/skills/my-implement/SKILL.md` |
-| my-test | Use pytest for test-first Python development and staged verification | `.agents/skills/my-test/SKILL.md` |
+| my-implement | Add or change Python code with a simple structure and ruff verification | `.agents/skills/my-implement/SKILL.md` |
+| my-test | TDD and pytest workflow delegated by `my-implement`; standalone for test execution or analysis without code changes | `.agents/skills/my-test/SKILL.md` |
 | show-me | Visualize the current topic with a diagram, tree, Mermaid, or HTML | `.agents/skills/show-me/SKILL.md` |
 | eli5 | Explain code or technical concepts with accessible language and examples | `.agents/skills/eli5/SKILL.md` |
 | ponytail | Prefer the shortest working implementation, YAGNI, standard features, and native features | `.agents/skills/ponytail/SKILL.md` |

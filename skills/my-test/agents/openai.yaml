@@ -1,4 +1,4 @@
 interface:
   display_name: "My Test"
-  short_description: "Test-first development and staged verification with pytest"
-  default_prompt: "Use $my-test to write pytest tests before changing production code."
+  short_description: "Pytest TDD and staged test verification"
+  default_prompt: "Use $my-test to apply the pytest TDD and staged test-verification workflow."

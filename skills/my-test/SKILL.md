@@ -1,6 +1,6 @@
 ---
 name: my-test
-description: Apply test-first development and staged verification with pytest. Use when adding or changing Python behavior, fixing bugs, refactoring, or adding or updating pytest tests.
+description: Apply the pytest TDD and staged test-verification procedure during Python code changes, or run and analyze tests without changing Python code.
 ---
 
 # My Test
@@ -11,8 +11,8 @@ description: Apply test-first development and staged verification with pytest. U
 2. Before changing production code, add or update a pytest test that states that behavior.
 3. Run only that test and confirm it fails for the right reason (missing implementation or the bug). Do not treat environment problems or a broken test as evidence to proceed.
 4. Implement the minimum needed to pass the test.
-5. Clean up design while keeping the full suite green.
-6. Widen verification: target test, then related tests, then the full runnable suite.
+5. Refactor while keeping the tests green.
+6. Widen verification as described in [Running](#running).
 
 For refactors that must keep current behavior, first add characterization tests that lock that behavior. Do not require new tests for comment-only or docs-only changes that do not change runtime behavior.
 
@@ -42,6 +42,4 @@ pytest tests/path/to/test_module.py -q
 pytest -q
 ```
 
-Then run ruff as in [my-implement](../my-implement/SKILL.md).
-
-If pytest is not already part of the project's test setup, do not add it without user approval. If no test infrastructure exists, do not create one without a request.
+If pytest is not already part of the project's test setup, do not add it without user approval.
