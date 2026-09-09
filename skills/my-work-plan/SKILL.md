@@ -5,7 +5,7 @@ description: Decide whether work needs a dated Markdown plan under docs/plans/, 
 
 # My Work Plan
 
-Pin the request, goal, steps, evidence, and next action in Markdown under `docs/plans/`. After a conversation break, the same file alone should be enough to resume.
+Pin the request, goal, steps, evidence, and next action in Markdown under `docs/plans/`. Write the file so anyone can take over from it alone: another agent, a later session, or a person with no conversation history. Do not leave a choice, dependency, or intent that the next executor would have to guess.
 
 ## When to use
 
@@ -43,30 +43,44 @@ Progress updates **overwrite the current plan file**. Chat may summarize, but `d
 
 ## Required sections
 
-Do not use vague "later" or "mostly done". Include all of the following every time.
+Do not use vague "later" or "mostly done", and do not leave leftovers a new reader would have to interpret. Include all of the following every time.
 
 | Section | What to write |
 |---|---|
 | Request | The gist of the instruction that created this plan. What, how far, and constraints. Do not paste the full prompt |
 | Goal | What the work is for (1–2 sentences) |
-| Done when | What must be observable to finish. Include how to verify (test names, commands) |
-| Steps | **Numbered**. Give each step a status and add evidence when done or the dependency when blocked |
+| Done when | What must be observable to finish. Include how to verify (test names, commands). When the work includes implementation, include that comments and docstrings in the changed files match the applicable format |
+| Steps | **Numbered**. Give each step a status and add evidence when done or the dependency when blocked. When the work includes implementation, include a post-implementation comment and docstring format-check step |
 | Next action | One concrete next action. Note waits or dangerous operations if any |
 
-Use `Steps` as the single source of truth for progress. The `in progress` step is the current work, `done` steps contain completed work and evidence, and `pending` or `blocked` steps are the remaining work. Do not repeat them in separate Current, Completed, or Remaining sections. Include a `Design choices` section only when the work has actual decisions worth preserving; keep those decisions in this plan unless they meet the ADR criteria below.
+Use `Steps` as the single source of truth for progress. The `in progress` step is the current work, `done` steps contain completed work and evidence, and `pending` or `blocked` steps are the remaining work. Do not repeat them in separate Current, Completed, or Remaining sections. Include a `Design choices` section when a material choice must not be re-decided by the next executor; omit it when there is no such choice. Keep those decisions in this plan unless they meet the ADR criteria below.
 
 ## Writing rules
 
-- Write for a reader with no prior context. Do not rely on pronouns alone (avoid "that", "the previous one").
+- Write so a reader with no prior context can finish the remaining work. Name files, commands, and expected evidence. Do not rely on pronouns alone (avoid "that", "the previous one") or on unstated chat context.
+- Resolve material choices in the plan. Record the pick and why in Design choices, including useful evidence or rejected options. If a remaining question would block work, put it in Next action with the options. Do not write a step that requires the executor to invent an approach. Keep work-local choices in the plan. If a choice meets the ADR criteria below, write an ADR and link it from the plan.
 - Summarize the user's instruction in Request. Do not substitute the agent's own restatement of goal or done-when. Do not paste the prompt or system text.
 - If the request changes mid-work, update Request and leave one sentence on what changed.
-- When present, Design choices record what you picked and why, including useful evidence or rejected options. Keep work-local choices in the plan. If a choice meets the ADR criteria below, write an ADR and link it from the plan.
-- Make steps executable units (example: "Add a regression test for cache invalidation in `tests/test_cache.py`").
+- Make steps executable units (example: "Add a regression test for cache invalidation in `tests/test_cache.py`"). Do not use open-ended leftovers such as "implement the rest" or "handle remaining cases as needed".
 - Use these status words: `pending` / `in progress` / `done` / `blocked` / `skipped` (give a reason when skipped).
 - Keep at most one step `in progress` at a time. Add paths, check results, or a concise command-result gist to a step when it becomes `done`.
 - Separate guess from confirmed fact. Mark unconfirmed items as "unconfirmed: …".
 - On update, make the whole file current. Do not leave the file stale after reporting a diff in chat.
 - This skill is the source of truth for plan criteria, format, location, and update timing. `AGENTS.md` owns shared skill routing and the invariant of where plans live.
+
+## Implementation format check
+
+When the plan includes implementation, add a numbered step after the implementation and verification steps. That step inspects comments and docstrings in the files this work changed, checks them against the applicable format, and fixes any violation before the step is marked `done`.
+
+Do not copy the format into the plan. Use the existing rules:
+
+| Code | Format |
+|---|---|
+| Python production | [my-implement](../my-implement/SKILL.md) Naming and comments, and Docstrings |
+| Tests | [my-test](../my-test/SKILL.md) |
+| Other | Workspace `AGENTS.md` and the shared comment rule in `myAGENTS.md`; match surrounding code |
+
+Inspect only files this work changed. Do not rewrite unrelated comments or docstrings.
 
 ## When to update
 
@@ -96,6 +110,7 @@ New file skeleton:
 ## Done when
 
 - [ ] (Observable condition and how to verify)
+- [ ] Comments and docstrings in the changed files match the applicable format (omit when the plan has no implementation)
 
 ## Steps
 
@@ -109,7 +124,13 @@ New file skeleton:
 - Notes: (or "none")
 ```
 
-Add this section only when the work has decisions worth preserving:
+When the plan includes implementation, include a numbered step after implementation and verification:
+
+```markdown
+N. [pending] Inspect comments and docstrings in the changed files against the applicable format and fix violations.
+```
+
+Add a Design choices section when a material choice must not be re-decided by the next executor:
 
 ```markdown
 ## Design choices
