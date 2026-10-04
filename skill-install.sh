@@ -19,10 +19,12 @@ fi
 download "https://github.com/DietrichGebert/ponytail/archive/refs/heads/main.tar.gz" "$temporary_directory/ponytail.tar.gz"
 download "https://github.com/humanlayer/skills/archive/refs/heads/main.tar.gz" "$temporary_directory/show-me.tar.gz"
 download "https://github.com/anthropics/claude-plugins-community/archive/refs/heads/main.tar.gz" "$temporary_directory/eli5.tar.gz"
+download "https://github.com/ayghri/i-have-adhd/archive/refs/heads/main.tar.gz" "$temporary_directory/i-have-adhd.tar.gz"
 
 tar -xzf "$temporary_directory/ponytail.tar.gz" -C "$temporary_directory"
 tar -xzf "$temporary_directory/show-me.tar.gz" -C "$temporary_directory"
 tar -xzf "$temporary_directory/eli5.tar.gz" -C "$temporary_directory"
+tar -xzf "$temporary_directory/i-have-adhd.tar.gz" -C "$temporary_directory"
 
 copy_skill() {
   local source_directory=$1
@@ -48,3 +50,4 @@ done
 
 copy_skill "$temporary_directory/skills-main/plugins/show-me/skills/show-me" show-me
 copy_skill "$temporary_directory/claude-plugins-community-main/eli5/skills/eli5" eli5
+copy_skill "$temporary_directory/i-have-adhd-main/skills/i-have-adhd" i-have-adhd

@@ -51,6 +51,8 @@ When `ponytail` is also active for a Python code change, `my-work-plan`, `my-imp
 
 Use `ponytail-review` and `ponytail-audit` only when the user explicitly asks for an overengineering or complexity review. They do not replace a general review for correctness, regressions, security, performance, or test coverage.
 
+Use `i-have-adhd` only after the user invokes it. Its output shape then applies until the user says "stop adhd mode" or "normal mode". Confirm before destructive actions, and follow workspace instructions when they conflict.
+
 | Skill | When to use it | Path |
 |---|---|---|
 | my-work-plan | Define the work plan and, when needed, record and update it in `docs/plans/` | `.agents/skills/my-work-plan/SKILL.md` |
@@ -59,6 +61,7 @@ Use `ponytail-review` and `ponytail-audit` only when the user explicitly asks fo
 | my-test | TDD and pytest workflow delegated by `my-implement`; standalone for test-only changes, execution, or analysis | `.agents/skills/my-test/SKILL.md` |
 | show-me | Visualize the current topic with a diagram, tree, Mermaid, or HTML | `.agents/skills/show-me/SKILL.md` |
 | eli5 | Explain code or technical concepts with accessible language and examples | `.agents/skills/eli5/SKILL.md` |
+| i-have-adhd | Shape output for an ADHD reader after the user invokes `/i-have-adhd` | `.agents/skills/i-have-adhd/SKILL.md` |
 | ponytail | Simplify implementation within applicable workflow and verification requirements | `.agents/skills/ponytail/SKILL.md` |
 | ponytail-review | Review the current diff specifically for overengineering when requested | `.agents/skills/ponytail-review/SKILL.md` |
 | ponytail-audit | Audit the workspace specifically for overengineering when requested | `.agents/skills/ponytail-audit/SKILL.md` |
